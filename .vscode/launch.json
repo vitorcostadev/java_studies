@@ -3,6 +3,34 @@
   "configurations": [
     {
       "type": "java",
+      "name": "CarroTest",
+      "request": "launch",
+      "mainClass": "src.poo.modificador_final.tests.CarroTest",
+      "projectName": "Cjava_224b5eb3"
+    },
+    {
+      "type": "java",
+      "name": "AnimeTest",
+      "request": "launch",
+      "mainClass": "src.poo.metodos.tests.AnimeTest",
+      "projectName": "Cjava_224b5eb3"
+    },
+    {
+      "type": "java",
+      "name": "HerancaTest02",
+      "request": "launch",
+      "mainClass": "src.poo.heranca.tests.HerancaTest02",
+      "projectName": "Cjava_224b5eb3"
+    },
+    {
+      "type": "java",
+      "name": "HerancaTest",
+      "request": "launch",
+      "mainClass": "src.poo.heranca.tests.HerancaTest",
+      "projectName": "Cjava_224b5eb3"
+    },
+    {
+      "type": "java",
       "name": "Main",
       "request": "launch",
       "mainClass": "src.exercicios.sistema_seminarios.Main",

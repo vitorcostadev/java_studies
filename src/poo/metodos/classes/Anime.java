@@ -7,12 +7,13 @@ public class Anime {
     private String genre;
     private String studio;
 
-    {
-        System.out.println("Dentro do bloco de inicialização");
-    }
-
     public Anime(String name){
         this.name = name;
+    }
+
+    @Override
+    public String toString(){
+        return this.name;
     }
 
     public Anime(String name, String studio){
