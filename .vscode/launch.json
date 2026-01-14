@@ -3,6 +3,27 @@
   "configurations": [
     {
       "type": "java",
+      "name": "FuncionarioTest",
+      "request": "launch",
+      "mainClass": "src.poo.abstract_class.tests.FuncionarioTest",
+      "projectName": "Cjava_224b5eb3"
+    },
+    {
+      "type": "java",
+      "name": "Test",
+      "request": "launch",
+      "mainClass": "src.projetins.Velha.Test",
+      "projectName": "Cjava_224b5eb3"
+    },
+    {
+      "type": "java",
+      "name": "ClienteTest",
+      "request": "launch",
+      "mainClass": "src.poo.enums.tests.ClienteTest",
+      "projectName": "Cjava_224b5eb3"
+    },
+    {
+      "type": "java",
       "name": "CarroTest",
       "request": "launch",
       "mainClass": "src.poo.modificador_final.tests.CarroTest",
