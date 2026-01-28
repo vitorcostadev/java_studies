@@ -11,7 +11,7 @@ public class Exercise15 {
         int anos=0, meses=0, dias=0;
 
         System.out.println("Ano: "+ano);
-        //ano = (2026 - ano) * 365;
+        ano = (2026 - ano) * 365;
 
         do{
             if(ano >= 365){

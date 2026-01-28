@@ -12,7 +12,7 @@ public class Exercise22 {
         SecureRandom random = new SecureRandom();
 
         int tempo = random.nextInt(1,30);
-        int velocidade = random.nextInt(90, 180);
+        int velocidade = random.nextInt(30, 180);
 
         int distance = tempo * velocidade;
         int litrosUsado = distance / 12;
