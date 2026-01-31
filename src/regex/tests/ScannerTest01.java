@@ -1,13 +1,16 @@
 package src.regex.tests;
 
-public class ScannerTest {
+import java.util.Scanner;
+
+public class ScannerTest01 {
     void main(){
-        String texto = "Asuna, Nami, Nico Robin, Kaguya Ootsuki, Ai Hoshino, Kana Arima, Akane Kurokawa";
-        String[] split = texto.split(",");
+        String texto = "";
+        Scanner scan = new Scanner(System.in);
+        scan.useDelimiter(",");
 
-        for(String str : split){
-            System.out.println(str.trim());
+        IO.print("Digite um texto: ");
+        while(scan.hasNextLine()){
+            System.out.println(scan.nextLine());
         }
-
     }
 }
