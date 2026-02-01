@@ -1,0 +1,28 @@
+-- MENU -- 
+1. Cadastrar um novo pet
+ - As perguntas feitas em 'docs/forms.txt' serão mostradas no CLI.
+ - Todas as informações serão validadas e guardadas em um arquivo.txt
+ - Após isso, o usuário voltará ao menu inicial.
+2. Alterar os dados do pet cadastrado
+ - O usuário informará o nome e sobrenome do pet para buscar na 'database'.
+ - Em caso de vários pets com o mesmo nomes existir, abrirá um menu com todas as informações para o usuário escolher.
+ - Após escolher, o usuário informará o que deseja alterar
+ - Essa informação será validada antes de ser sobescrita.
+ - Após isso, o usuário retornará ao menu inicial.
+3. Deletar um pet cadastrado
+ - O usuário informará o nome e sobrenome do pet para buscar na 'database'.
+ - Caso o pet não exista, o usuário será informado e voltará ao menu inicial.
+ - Em caso de vários pets com o mesmo nomes existir, abrirá um menu com todas as informações para o usuário escolher.
+ - Após o usuário escolher, um ultimo check será feito e em caso de validado, o pet escolhido será deletado.
+ - Após isso, o usuário retornará ao menu inicial.
+4. Listar todos os pets cadastrados
+ - Verificação se existe algum pet salvo.
+ - Em caso de existir, cada um será salvo em um array e depois será mostrado na tela.
+ - Após isso, o usuário retornará ao menu inicial.
+5. Listar pets por algum critério (idade, nome, raça)
+ - Abrirá um menu com os critérios disponiveis, o usuário vai escolher.
+ - Após isso, será perguntado o usuário o valor desse critério para filtro.
+ - Após o usuário digitar, será validado e, após isso, a busca será feita aplicando o filtro.
+ - Após isso, o usuário retornará ao menu inicial.
+6. Sair
+ - Intuitivo.

@@ -18,6 +18,10 @@ public class FileTest01 {
             boolean renameTo = directoryArchive.renameTo(fileRenamed);
             System.out.println(renameTo);
             
+            File fileRenamed2 = new File(directory, "file_asuna.txt");
+            boolean isRenamed2 = directoryArchive.renameTo(fileRenamed2);
+            System.out.println(isRenamed2);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
