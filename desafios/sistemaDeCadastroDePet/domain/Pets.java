@@ -1,20 +1,15 @@
 package desafios.sistemaDeCadastroDePet.domain;
 
+import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import desafios.sistemaDeCadastroDePet.repositories.InvalidNameException;
+import desafios.sistemaDeCadastroDePet.repositories.PetsTemplate;
 
-public class Pets {
-    private String name;
-    private String subname;
-    private TypePet typePet;
-    private GenrePet genrePet;
-    private AddressWhoFoundPet addressWhoFoundPet;
-    private Double age;
-    private Double size;
-    private String specie;
-    private String filename;
-
+public class Pets extends PetsTemplate {
     public Pets(String name,
                 String subname,
                 TypePet typePet,
@@ -25,40 +20,20 @@ public class Pets {
                 String specie,
                 String filename
     ){
-        this.name = name;
-        this.subname = subname;
-        this.typePet = typePet;
-        this.genrePet = genrePet;
-        this.addressWhoFoundPet = addressWhoFoundPet;
-        this.age = age;
-        this.size = size;
-        this.specie = specie;
-        this.filename = filename;
+        super(name,subname,typePet,genrePet,addressWhoFoundPet,age,size,specie,filename);
     }
 
-    public Pets(String name,
-                String subname,
-                TypePet typePet,
-                GenrePet genrePet,
-                AddressWhoFoundPet addressWhoFoundPet,
-                Double age,
-                Double size,
-                String specie
-    ){
-        this.name = name;
-        this.subname = subname;
-        this.typePet = typePet;
-        this.genrePet = genrePet;
-        this.addressWhoFoundPet = addressWhoFoundPet;
-        this.age = age;
-        this.size = size;
-        this.specie = specie;
-        
-        this.filename = null;
-    }
+    public Object hasFieldOfSameType(Object obj) {
+        if (obj == null) return null;
+        Class<?> tipoObjeto = obj.getClass();
+        List<Object> classes = new ArrayList<>();
 
-    public Pets(TypePet typePet, GenrePet genrePet){
-        this(null, null, typePet, genrePet, null, null,null,null,null);
+        for (Field field : getClass().getSuperclass().getDeclaredFields()) {
+            if (field.getType().equals(tipoObjeto)) {
+                return obj;
+            }
+        }
+        return null;
     }
 
     public void setName(String name) throws InvalidNameException{
@@ -107,9 +82,7 @@ public class Pets {
 
     public void setSize(Double size) {
         if(
-            size > 60 ||
-            size < 0.5 ||
-            size == null
+                size > 60 || size < 0.5
         ){
             throw new InvalidParameterException("O parametro 'size' não pode ser nulo e deve estar entre 60kg < size > 0.5kg.");
         }

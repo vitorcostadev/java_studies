@@ -2,3 +2,4 @@ Produto{name='Coca Cola', stock=255, value=15.0, dateOfInsert=2026-01-31T15:42:1
 Produto{name='Coca cola', stock=255, value=23.0, dateOfInsert=2026-01-31T15:44:31.605334600}
 Produto{name='Sprite', stock=255, value=23.0, dateOfInsert=2026-01-31T15:47:17.992370500}
 Produto{name='Lasanha', stock=255, value=28.0, dateOfInsert=2026-01-31T16:01:44.523019200}
+Produto{name='GPT eh melhor', stock=255, value=55.0, dateOfInsert=2026-01-31T16:03:39.931766100}
