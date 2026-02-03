@@ -164,6 +164,7 @@ public class PetWriterAndReader {
                 }
             }catch(IOException e){
                 System.out.println("Erro ao criar o arquivo: "+file.getName());
+                return;
             }
         }
 
@@ -184,6 +185,8 @@ public class PetWriterAndReader {
 
                 bw.flush();
                 System.out.println("O arquivo "+file.getName()+" foi criado com sucesso!");
+            }catch (IOException e){
+                System.out.println("Erro ao escrever no arquivo: "+file.getName());
             }
             
     }
@@ -251,7 +254,6 @@ public class PetWriterAndReader {
                         specie, this.pathname+"/"+k.replace(","," - "));
 
                 }
-
             }
         }
         return null;
@@ -265,17 +267,26 @@ public class PetWriterAndReader {
             return;
         }
         
-        Path deleteFileFounded = Paths.get(pet.getFilename());
-        Files.delete(deleteFileFounded);
+        try{
+            Path deleteFileFounded = Paths.get(pet.getFilename());
+            Files.delete(deleteFileFounded);
+        }catch(Exception e){
+            System.out.println("Erro ao deletar o pet: "+e.getMessage());
+        }
     }
 
-    public void attPet(Pets newPet, String name, String subName) throws IOException, InvalidParameterException{
-        Pets pet = findPetByName(new StringBuilder(name), new StringBuilder(subName));
-        if(pet != null){
-            deletePet(name, subName);
-            addNewPet(newPet);
-        }else{
-            throw new InvalidParameterException("O pet com nome '"+name+" "+subName+"' não existe.");
+    public void updatePet(Pets newPet, String name, String subName) throws InvalidParameterException{
+
+        try{
+            Pets pet = findPetByName(new StringBuilder(name), new StringBuilder(subName));
+            if(pet != null){
+                deletePet(name, subName);
+                addNewPet(newPet);
+            }else{
+                throw new InvalidParameterException("O pet com nome '"+name+" "+subName+"' não existe.");
+            }
+        }catch(IOException e){
+            System.out.println("Erro ao atualizar o pet: "+e.getMessage());
         }
     }
 

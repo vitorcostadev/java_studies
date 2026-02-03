@@ -19,12 +19,6 @@ public class MenuService {
         this.end = 7;
     }
 
-    public MenuService(String fluxogramaPath, int start, int end){
-        this.fluxogramaPath = fluxogramaPath;
-        this.start = start;
-        this.end = end;
-    }
-
     private static List<Pets> menuSwitchForPet(int option, Scanner scan, PetWriterAndReader pw){
         switch (option){
             case 1 -> {
@@ -636,7 +630,7 @@ public class MenuService {
                             System.out.println("Opção inválida");
                             break;
                     }
-                    pw.attPet(pet, names[0].trim(), names[1].trim());
+                    pw.updatePet(pet, names[0].trim(), names[1].trim());
                     System.out.println("O pet foi atualizado com sucesso!");
                 }else{
                     System.out.println("Opção inválida. Escolha entre 1 e 8.");

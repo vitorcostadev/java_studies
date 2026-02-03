@@ -18,7 +18,7 @@ public enum SearchCrit {
                 }
                 return !returnedPets.isEmpty() ? returnedPets : null;
             }
-            return null;
+            return new ArrayList<>();
         }
         
         @Override
@@ -59,7 +59,7 @@ public enum SearchCrit {
                 }
                 return !returnedPets.isEmpty() ? returnedPets : null;
             }
-            return null;
+            return new ArrayList<>();
         }
 
         @Override
@@ -93,7 +93,7 @@ public enum SearchCrit {
                 }
                 return !returnedPets.isEmpty() ? returnedPets : null;
             }
-            return null;
+            return new ArrayList<>();
         }
 
         @Override
@@ -127,7 +127,7 @@ public enum SearchCrit {
                 }
                 return !returnedPets.isEmpty() ? returnedPets : null;
             }
-            return null;
+            return new ArrayList<>();
         }
 
         @Override
@@ -162,7 +162,7 @@ public enum SearchCrit {
                 }
                 return !returnedPets.isEmpty() ? returnedPets : null;
             }
-            return null;
+            return new ArrayList<>();
         }
 
         @Override
@@ -196,7 +196,7 @@ public enum SearchCrit {
                 }
                 return !returnedPets.isEmpty() ? returnedPets : null;
             }
-            return null;
+            return new ArrayList<>();
         }
 
         @Override
