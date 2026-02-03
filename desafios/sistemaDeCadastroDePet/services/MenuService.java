@@ -310,7 +310,7 @@ public class MenuService {
         
         scan.close();
     }
-    
+
     private String getAnswerFromFluxogram(int answerId) throws IOException{
         try(FileReader fr = new FileReader(this.fluxogramaPath);
             BufferedReader br = new BufferedReader(fr)){
@@ -338,7 +338,7 @@ public class MenuService {
             switch(i){
                 case 0:
                     String input = scanner.nextLine(); 
-                    String[] parts = input.split(","); // Vitor,Costa .. ...
+                    String[] parts = input.split(","); 
                     
                     if(parts.length < 2 ||
                        !Regex.isValidNameAndSubName(parts[0].trim()) ||
@@ -626,6 +626,7 @@ public class MenuService {
 
                             if(!Regex.isValidNameAndSubName(newSpecie)){
                                 System.out.println("A espécie digitada é inválida.");
+                                break;
                             }else{
                                 pet.setSpecie(newSpecie);
                                 System.out.println("A espécie do pet foi alterada para: "+newSpecie);

@@ -36,7 +36,7 @@ public class PetWriterAndReader {
             }
         }
     }
-    
+
     public PetWriterAndReader(String pathname){
         this.pathname = pathname;
     }
@@ -78,11 +78,12 @@ public class PetWriterAndReader {
                         String[] nameParts = listString.getFirst().split(",")[1].trim().split(" ");
                         petName = nameParts[0];
                         if(nameParts.length > 1){
-                            for(int i = 1; i<nameParts.length; i++){
-                                petSubName.append(nameParts[i].trim()).append(" ");
+                            for(int i = 1; i < nameParts.length; i++){
+                                petSubName.append(nameParts[i].trim());
+                                if(i < nameParts.length - 1) {
+                                    petSubName.append(" ");
+                                }
                             }
-                        }else{
-                            petSubName = new StringBuilder(nameParts[1]);
                         }
                         
                         tp = listString.get(1).split(",")[1].trim().equals("Gato") 
@@ -134,6 +135,7 @@ public class PetWriterAndReader {
             dateTime.getMinute()+
             " - "+
             pet.getName().toUpperCase()+
+            " "+ 
             pet.getSubname().toUpperCase()+
             ".txt"
         );
@@ -149,6 +151,7 @@ public class PetWriterAndReader {
                 dateTime.getMinute()+
                 " - "+
                 pet.getName().toUpperCase()+
+                " "+ 
                 pet.getSubname().toUpperCase()+
                 ".txt"
             );
@@ -195,8 +198,10 @@ public class PetWriterAndReader {
 
         for(String k : files){
             String nameInDb = k.split("[.,]")[1];
-
-            if((name.toString() + subname.toString()).trim().toLowerCase().equals(nameInDb.toLowerCase())){
+            
+            String nomeCompleto = (name.toString().trim() + " " + subname.toString().trim()).toUpperCase();
+            
+            if(nomeCompleto.equals(nameInDb.toUpperCase())){
                 List<String> listString = new ArrayList<>();
 
                 try(FileReader fr = new FileReader(this.pathname+"/"+k.replace(","," - "));
@@ -254,8 +259,13 @@ public class PetWriterAndReader {
 
     public void deletePet(String name, String subname) throws IOException{
         Pets pet = findPetByName(new StringBuilder(name), new StringBuilder(subname));
+        
+        if(pet == null){
+            System.out.println("Pet não encontrado: " + name + " " + subname);
+            return;
+        }
+        
         Path deleteFileFounded = Paths.get(pet.getFilename());
-
         Files.delete(deleteFileFounded);
     }
 
