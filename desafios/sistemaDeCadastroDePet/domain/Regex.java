@@ -19,4 +19,10 @@ public class Regex {
         return matcher.find();
     }
 
+    public static boolean isValidGender(String gender){
+        Pattern pattern = Pattern.compile("^[\\p{L}\\s]+$");
+        Matcher matcher = pattern.matcher(gender);
+
+        return matcher.find();
+    }
 }

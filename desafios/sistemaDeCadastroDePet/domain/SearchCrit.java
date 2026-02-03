@@ -11,7 +11,8 @@ public enum SearchCrit {
             if(name instanceof String) {
                 List<Pets> returnedPets = new ArrayList<>();
                 for (Pets pet : pets) {
-                    if (pet.getName().equals(name) || pet.getSubname().equals(name)) {
+                    String namePet = pet.getName().toLowerCase()+" "+pet.getSubname().toLowerCase();
+                    if (namePet.contains(((String) name).toLowerCase())) {
                         returnedPets.add(pet);
                     }
                 }
@@ -19,6 +20,7 @@ public enum SearchCrit {
             }
             return null;
         }
+        
         @Override
         public List<Pets> findPets(List<Pets> pets, Object name, Object extra) {
 
@@ -27,8 +29,9 @@ public enum SearchCrit {
             List<Pets> result = new ArrayList<>();
 
             for (Pets pet : pets) {
+                String namePet = pet.getName().toLowerCase()+" "+pet.getSubname().toLowerCase();
                 if (
-                        (pet.getName().equals(name) || pet.getSubname().equals(name)) &&
+                        namePet.contains(name.toString().toLowerCase()) &&
                                 (extra == null || matchExtra(pet, extra))
                 ) {
                     result.add(pet);

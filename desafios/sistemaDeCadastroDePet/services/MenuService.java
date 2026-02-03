@@ -18,10 +18,147 @@ public class MenuService {
         this.start = 0;
         this.end = 7;
     }
+
     public MenuService(String fluxogramaPath, int start, int end){
         this.fluxogramaPath = fluxogramaPath;
         this.start = start;
         this.end = end;
+    }
+
+    private static List<Pets> menuSwitchForPet(int option, Scanner scan, PetWriterAndReader pw){
+        switch (option){
+            case 1 -> {
+                System.out.print("Digite o nome ou sobrenome do pet: ");
+                String name = scan.nextLine().trim().toLowerCase();
+
+                if(Regex.isValidNameAndSubName(name)){
+                    List<Pets> petsFounded = SearchCrit.NAME.findPet(pw.getAllPets(), name);
+                    return !petsFounded.isEmpty() ? petsFounded : null;
+                }
+            }
+            case  2 -> {
+                System.out.print("Digite a idade do pet: ");
+                String age = scan.nextLine().trim();
+
+                if(Regex.isValidAgeOrSize(age)){
+                    List<Pets> petsFounded = SearchCrit.AGE.findPet(pw.getAllPets(), age);
+                    return !petsFounded.isEmpty() ? petsFounded : null;
+                }
+
+            }
+            case 3 -> {
+                System.out.print("Digite o gênero do pet: ");
+                String gender = scan.nextLine().trim();
+
+                if(Regex.isValidGender(gender)){
+                    List<Pets> petsFounded = SearchCrit.SEX.findPet(pw.getAllPets(), gender);
+                    return !petsFounded.isEmpty() ? petsFounded : null;
+                }
+            }
+            case 4 -> {
+                System.out.print("Digite o peso do pet: ");
+                String size = scan.nextLine().trim();
+
+                if(Regex.isValidAgeOrSize(size)){
+                    List<Pets> petsFounded = SearchCrit.SIZE.findPet(pw.getAllPets(), size);
+                    return !petsFounded.isEmpty() ? petsFounded : null;
+                }               
+            }
+            case 5 -> {
+                System.out.println("Digite a espécie do pet:");
+                String specie = scan.nextLine().trim();
+                List<Pets> petsFounded = SearchCrit.SPECIE.findPet(pw.getAllPets(), specie);
+                return !petsFounded.isEmpty() ? petsFounded : null;
+            }
+            case 6 -> {
+                System.out.println("Digite o endereço do pet (bairro, cidade, rua): ");
+                String[] address = scan.nextLine().trim().split(",");
+
+                if(address.length < 3){
+                    System.out.println("Formato de endereço inválido. Forneça no formato: bairro, cidade, rua");
+                }else{
+                    AddressWhoFoundPet addressWhoFoundPet = new AddressWhoFoundPet(address[1].trim(), address[2].trim(), address[0].trim());
+                    List<Pets> petsFounded = SearchCrit.ADDRESS.findPet(pw.getAllPets(), addressWhoFoundPet);
+                    return !petsFounded.isEmpty() ? petsFounded : null;
+                }
+            }
+            default -> {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    private static void petInfo(List<Pets> pets){
+        int i = 0;
+        for(Pets pet : pets){
+            System.out.println((i+1) +
+                    ". "+
+                    pet.getName()+
+                    " "+
+                    pet.getSubname()+
+                    " - "+
+                    pet.getGenrePet().getAttrName()+
+                    " - "+
+                    pet.getAddressWhoFoundPet().getRoadOfHome()+
+                    ", "+
+                    pet.getAddressWhoFoundPet().getNumberOfHome()+
+                    " - "+
+                    pet.getAddressWhoFoundPet().getCityOfHome()+
+                    " - "+
+                    pet.getAge()+
+                            (pet.getAge()>1 ? "anos" : "ano")+
+                    " - "+
+                    pet.getSize()+"kg"+
+                    " - "+
+                    pet.getSpecie()
+                    );
+            i++;
+        }
+    }
+
+    private static Object coletarValorCriterio(int criterio, Scanner scan){
+        return switch(criterio){
+            case 1 -> {
+                System.out.print("Digite o nome ou sobrenome do pet: ");
+                String name = scan.nextLine().trim().toLowerCase();
+                yield Regex.isValidNameAndSubName(name) ? name : null;
+            }
+            case 2 -> {
+                System.out.print("Digite a idade do pet: ");
+                String age = scan.nextLine().trim().replace(",", ".");
+                yield Regex.isValidAgeOrSize(age) ? Double.parseDouble(age) : null;
+            }
+            case 3 -> {
+                System.out.print("Digite o gênero do pet (masculino/feminino): ");
+                String gender = scan.nextLine().trim().toLowerCase();
+                if(gender.equals("masculino") || gender.equals("m")){
+                    yield GenrePet.MALE;
+                }else if(gender.equals("feminino") || gender.equals("f")){
+                    yield GenrePet.FEMALE;
+                }
+                yield null;
+            }
+            case 4 -> {
+                System.out.print("Digite o peso do pet: ");
+                String size = scan.nextLine().trim().replace(",", ".");
+                yield Regex.isValidAgeOrSize(size) ? Double.parseDouble(size) : null;
+            }
+            case 5 -> {
+                System.out.print("Digite a espécie do pet: ");
+                yield scan.nextLine().trim();
+            }
+            case 6 -> {
+                System.out.print("Digite o endereço (bairro, cidade, rua): ");
+                String[] address = scan.nextLine().trim().split(",");
+                if(address.length >= 3){
+                    yield new AddressWhoFoundPet(address[1].trim(), address[2].trim(), address[0].trim());
+                }
+                System.out.println("Formato de endereço inválido.");
+                yield null;
+            }
+            default -> null;
+        };
     }
 
     public void menu() throws IOException{
@@ -39,9 +176,13 @@ public class MenuService {
         PetWriterAndReader pw = new PetWriterAndReader("desafios\\sistemaDeCadastroDePet\\db");
 
         do{
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+            System.out.println("-------------------------------------------------------------------");
             for(String option : options){
                 System.out.println(option);
             }
+            System.out.println("-------------------------------------------------------------------");
             IO.print("Faça sua escolha: ");
             
             if(scan.hasNextInt()){
@@ -52,15 +193,21 @@ public class MenuService {
                 scan.nextLine(); 
                 continue;
             }
-
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
             switch(choose){
                 case 1:
+                    System.out.println("-------------------------------------------------------------------");
                     addNewPetFromCLI(scan);
+                    System.out.println("-------------------------------------------------------------------");
                     break;
                 case 2:
+                    System.out.println("-------------------------------------------------------------------");
                     attAInsertedPet(scan);
+                    System.out.println("-------------------------------------------------------------------");
                     break;
                 case 3:
+                    System.out.println("-------------------------------------------------------------------");
                     System.out.println("Digite o nome e sobrenome do pet (eg. Nooby, Pendragon): ");
                     String[] names = scan.nextLine().split(",");
                     if(names.length < 2){
@@ -73,16 +220,23 @@ public class MenuService {
                     } catch (IOException e) {
                         System.out.println("Erro ao deletar o pet: "+e.getMessage());
                     }
+                    System.out.println("-------------------------------------------------------------------");
                     break;
                 case 4:
                     System.out.println("Todos os pets cadastrados: ");
+                    System.out.println("-------------------------------------------------------------------");
                     List<Pets> pets = pw.getAllPets();
 
                     for(Pets pet : pets){
                         System.out.println(pet.getName()+" "+pet.getSubname());
                     }
+                    System.out.println("-------------------------------------------------------------------");
                     break;
                 case 5:
+                    System.out.print("\033[H\033[2J");
+                    System.out.flush();
+
+                    System.out.println("-------------------------------------------------------------------");
                     IO.println("Digite quais critérios deseja usar, segue a lista dos possiveis: ");
                     IO.println("[1] : Nome ou sobrenome");
                     IO.println("[2] : Idade");
@@ -90,6 +244,7 @@ public class MenuService {
                     IO.println("[4] : Peso");
                     IO.println("[5] : Raça");
                     IO.println("[6] : Endereço");
+                    System.out.println("-------------------------------------------------------------------");
                     IO.println("Digite o número do critério separando-os por vírgula (max. 2 por busca) : ");
                     String[] userOption = scan.nextLine().trim().split(",");
                     
@@ -98,45 +253,47 @@ public class MenuService {
                     }else{
                         if(userOption.length == 1 && Regex.isValidAgeOrSize(userOption[0])){
                             int option = Integer.parseInt(userOption[0]);
-                            
-                            switch (option){
-                                
-                                case 1 -> {
-                                    System.out.print("Digite o nome ou sobrenome do pet: ");
-                                    String name = scan.nextLine();
-                                    
-                                    if(name != null && Regex.isValidNameAndSubName(name)){
-                                        List<Pets> petsFounded = SearchCrit.NAME.findPet(pw.getAllPets(), name);
-                                        
-                                        if(petsFounded != null){
-                                            for(int i = 0; i<petsFounded.size(); i++){
-                                                Pets pets1 = petsFounded.get(i);
+                            List<Pets> retrievedPets = menuSwitchForPet(option, scan, pw);
+                            if(retrievedPets != null){
+                                petInfo(retrievedPets);
+                            }else{
+                                System.out.println("Nenhum pet encontrado com esse critério.");
+                            }
+                        }else{
+                            int optionOne = Integer.parseInt(userOption[0].trim());
+                            int optionTwo = Integer.parseInt(userOption[1].trim());
 
-                                                System.out.println((i+1) +
-                                                        ". "+
-                                                        pets1.getName()+
-                                                        " "+
-                                                        pets1.getSubname()+
-                                                        " - "+
-                                                        pets1.getGenrePet().getAttrName()+
-                                                        " - "+
-                                                        pets1.getAddressWhoFoundPet().getRoadOfHome()+
-                                                        ", "+
-                                                        pets1.getAddressWhoFoundPet().getNumberOfHome()+
-                                                        " - "+
-                                                        pets1.getAddressWhoFoundPet().getCityOfHome()+
-                                                        " - "+
-                                                        pets1.getAge()+
-                                                                (pets1.getAge()>1 ? "anos" : "ano")+
-                                                        " - "+
-                                                        pets1.getSize()+"kg"+
-                                                        " - "+
-                                                        pets1.getSpecie()
-                                                        );
-                                            }
-                                        }
-                                    }
+                            if(optionOne != optionTwo && optionOne >= 1 && optionOne <= 6 && optionTwo >= 1 && optionTwo <= 6){
+                                Object valorCriterio1 = coletarValorCriterio(optionOne, scan);
+                                if(valorCriterio1 == null){
+                                    System.out.println("Valor inválido para o primeiro critério.");
+                                    break;
                                 }
+
+                                Object valorCriterio2 = coletarValorCriterio(optionTwo, scan);
+                                if(valorCriterio2 == null){
+                                    System.out.println("Valor inválido para o segundo critério.");
+                                    break;
+                                }
+                                SearchCrit[] criterios = {null, SearchCrit.NAME, SearchCrit.AGE, SearchCrit.SEX, SearchCrit.SIZE, SearchCrit.SPECIE, SearchCrit.ADDRESS};
+                                List<Pets> primeiraFiltragem = criterios[optionOne].findPet(pw.getAllPets(), valorCriterio1);
+
+                                if(primeiraFiltragem == null || primeiraFiltragem.isEmpty()){
+                                    System.out.println("Nenhum pet encontrado com o primeiro critério.");
+                                    break;
+                                }
+
+                                List<Pets> resultadoFinal = criterios[optionTwo].findPet(primeiraFiltragem, valorCriterio2);
+
+                                if(resultadoFinal != null && !resultadoFinal.isEmpty()){
+                                    System.out.println("-------------------------------------------------------------------");
+                                    petInfo(resultadoFinal);
+                                    System.out.println("-------------------------------------------------------------------");
+                                }else{
+                                    System.out.println("Nenhum pet encontrado com ambos os critérios.");
+                                }
+                            }else{
+                                System.out.println("Opções inválidas ou iguais. Escolha dois critérios diferentes entre 1 e 6.");
                             }
                         }
                     }
@@ -148,10 +305,12 @@ public class MenuService {
                     System.out.println("Opção inválida");
                     break;
             }
+            scan.nextLine();
         }while(choose != 6);
         
         scan.close();
     }
+    
     private String getAnswerFromFluxogram(int answerId) throws IOException{
         try(FileReader fr = new FileReader(this.fluxogramaPath);
             BufferedReader br = new BufferedReader(fr)){
@@ -179,7 +338,7 @@ public class MenuService {
             switch(i){
                 case 0:
                     String input = scanner.nextLine(); 
-                    String[] parts = input.split(",");
+                    String[] parts = input.split(","); // Vitor,Costa .. ...
                     
                     if(parts.length < 2 ||
                        !Regex.isValidNameAndSubName(parts[0].trim()) ||
@@ -310,7 +469,14 @@ public class MenuService {
 
             PetWriterAndReader pw = new PetWriterAndReader("desafios\\sistemaDeCadastroDePet\\db");
             try {
-                Pets pet = pw.findPetByName(names[0].trim(), names[1].trim());
+                StringBuilder petFirstName = new StringBuilder(names[0].trim());
+                StringBuilder petLastName = new StringBuilder();
+
+                for(int i = 1; i<names.length; i++){
+                    petLastName.append(names[i].trim()).append(" ");
+                }
+
+                Pets pet = pw.findPetByName(petFirstName, petLastName);
                 if(pet == null){
                     System.out.println("Pet não encontrado.");
                     return;
@@ -326,11 +492,12 @@ public class MenuService {
                     "Tamanho do pet",
                     "Espécie do pet"
                 };
-
+                System.out.println("Escolha o que deseja atualizar: ");
+                System.out.println("-------------------------------------------------------------------");
                 for (int i = 0; i < petAttrs.length; i++) {
                     System.out.println((i+1)+" : "+petAttrs[i]);
                 }
-
+                System.out.println("-------------------------------------------------------------------");
                 IO.print("Faça sua escolha: ");
                 int choose = scan.nextInt();
                 scan.nextLine(); 

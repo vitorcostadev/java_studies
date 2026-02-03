@@ -1,10 +1,6 @@
 package desafios.sistemaDeCadastroDePet.domain;
 
-import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import desafios.sistemaDeCadastroDePet.repositories.InvalidNameException;
 import desafios.sistemaDeCadastroDePet.repositories.PetsTemplate;
@@ -19,21 +15,21 @@ public class Pets extends PetsTemplate {
                 Double size,
                 String specie,
                 String filename
-    ){
-        super(name,subname,typePet,genrePet,addressWhoFoundPet,age,size,specie,filename);
-    }
-
-    public Object hasFieldOfSameType(Object obj) {
-        if (obj == null) return null;
-        Class<?> tipoObjeto = obj.getClass();
-        List<Object> classes = new ArrayList<>();
-
-        for (Field field : getClass().getSuperclass().getDeclaredFields()) {
-            if (field.getType().equals(tipoObjeto)) {
-                return obj;
-            }
+    ) throws InvalidNameException, InvalidParameterException {
+        super(name, subname, typePet, genrePet, addressWhoFoundPet, age, size, specie, filename);
+        
+        if (name == null || name.isEmpty()) {
+            throw new InvalidNameException("O nome não pode ser nulo ou vazio.");
         }
-        return null;
+        if (subname == null || subname.isEmpty()) {
+            throw new InvalidNameException("O sobrenome não pode ser nulo ou vazio.");
+        }
+        if (age == null || age > 20 || age < 0) {
+            throw new InvalidParameterException("A idade deve estar entre 0 e 20.");
+        }
+        if (size == null || size > 60 || size < 0.5) {
+            throw new InvalidParameterException("O tamanho deve estar entre 0.5kg e 60kg.");
+        }
     }
 
     public void setName(String name) throws InvalidNameException{
@@ -81,10 +77,8 @@ public class Pets extends PetsTemplate {
     }
 
     public void setSize(Double size) {
-        if(
-                size > 60 || size < 0.5
-        ){
-            throw new InvalidParameterException("O parametro 'size' não pode ser nulo e deve estar entre 60kg < size > 0.5kg.");
+        if (size == null || size > 60 || size < 0.5) {
+            throw new InvalidParameterException("O parametro 'size' não pode ser nulo e deve estar entre 0.5kg e 60kg.");
         }
         this.size = size;
     }
