@@ -1,7 +1,7 @@
 package src.exceptions.tests.runtime;
 
 public class RuntimeExceptionTest {
-    static void main() {
+    public static void main(String[] args) {
         // CHECKED e UNCHECKED
     }
 }

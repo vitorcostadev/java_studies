@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ExceptionTest {
-    static void main() {
+    public static void main(String[] args) {
         createNewFile();
     }
 

@@ -5,7 +5,7 @@ import java.util.Scanner;
 imprima na tela a soma entre A e B é mostre se a soma é menor que C.
  */
 public class Exercise01 {
-    static void main() {
+    public static void main(String[] args) {
         int[] values = new int[3];
         Scanner scan = new Scanner(System.in);
 

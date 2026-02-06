@@ -26,7 +26,7 @@ public class Main {
         boolean match = linhaSplitted[0].trim().matches("^[a-zA-ZçÇ\\s]+$");
         if(match){
             prodName = linhaSplitted[0].trim();
-            IO.print("Product name: "+ prodName+"\n");
+            System.out.print("Product name: "+ prodName+"\n");
         }
 
         boolean matchStockAndValue = (

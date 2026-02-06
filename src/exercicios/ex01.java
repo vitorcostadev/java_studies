@@ -15,7 +15,7 @@ public class ex01 {
         Scanner scan = new Scanner(System.in);
 
         do{
-            IO.print("Digite a quantidade de alunos: ");
+            System.out.print("Digite a quantidade de alunos: ");
             qtyAlunos=scan.nextInt();
 
             if(qtyAlunos <= 0){
@@ -29,7 +29,7 @@ public class ex01 {
 
         for(int i = 0; i<qtyAlunos; i++){
             System.out.printf("Digite o nome do %d aluno(a): ", i+1);
-            nomes[i] = scan.next().strip();
+            nomes[i] = scan.next().trim();
             for(int k = 0; k<3; k++){
                 System.out.printf("Digite a %d° nota do aluno %s: ", k+1, nomes[i]);
                 notas[i][k] = scan.nextDouble();

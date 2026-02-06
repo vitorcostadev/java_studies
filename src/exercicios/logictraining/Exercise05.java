@@ -6,7 +6,7 @@ calcule quantos salários mínimos esse usuário ganha e imprima na tela o resul
 (Base para o Salário mínimo R$ 1.293,20).
  */
 public class Exercise05 {
-    static void main() {
+    public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         double salario = 0;
         final double SALARIO_MINIMO = 1293.20;

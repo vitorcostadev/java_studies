@@ -21,7 +21,7 @@ public class MenuService {
 
     private static List<Pets> menuSwitchForPet(int option, Scanner scan, PetWriterAndReader pw){
         switch (option){
-            case 1 -> {
+            case 1: {
                 System.out.print("Digite o nome ou sobrenome do pet: ");
                 String name = scan.nextLine().trim().toLowerCase();
 
@@ -29,8 +29,9 @@ public class MenuService {
                     List<Pets> petsFounded = SearchCrit.NAME.findPet(pw.getAllPets(), name);
                     return !petsFounded.isEmpty() ? petsFounded : null;
                 }
+                break;
             }
-            case  2 -> {
+            case 2: {
                 System.out.print("Digite a idade do pet: ");
                 String age = scan.nextLine().trim();
 
@@ -38,9 +39,9 @@ public class MenuService {
                     List<Pets> petsFounded = SearchCrit.AGE.findPet(pw.getAllPets(), age);
                     return !petsFounded.isEmpty() ? petsFounded : null;
                 }
-
+                break;
             }
-            case 3 -> {
+            case 3: {
                 System.out.print("Digite o gênero do pet: ");
                 String gender = scan.nextLine().trim();
 
@@ -48,23 +49,25 @@ public class MenuService {
                     List<Pets> petsFounded = SearchCrit.SEX.findPet(pw.getAllPets(), gender);
                     return !petsFounded.isEmpty() ? petsFounded : null;
                 }
+                break;
             }
-            case 4 -> {
+            case 4: {
                 System.out.print("Digite o peso do pet: ");
                 String size = scan.nextLine().trim();
 
                 if(Regex.isValidAgeOrSize(size)){
                     List<Pets> petsFounded = SearchCrit.SIZE.findPet(pw.getAllPets(), size);
                     return !petsFounded.isEmpty() ? petsFounded : null;
-                }               
+                }
+                break;
             }
-            case 5 -> {
+            case 5: {
                 System.out.println("Digite a espécie do pet:");
                 String specie = scan.nextLine().trim();
                 List<Pets> petsFounded = SearchCrit.SPECIE.findPet(pw.getAllPets(), specie);
                 return !petsFounded.isEmpty() ? petsFounded : null;
             }
-            case 6 -> {
+            case 6: {
                 System.out.println("Digite o endereço do pet (bairro, cidade, rua): ");
                 String[] address = scan.nextLine().trim().split(",");
 
@@ -75,10 +78,10 @@ public class MenuService {
                     List<Pets> petsFounded = SearchCrit.ADDRESS.findPet(pw.getAllPets(), addressWhoFoundPet);
                     return !petsFounded.isEmpty() ? petsFounded : null;
                 }
+                break;
             }
-            default -> {
+            default:
                 return null;
-            }
         }
         return null;
     }
@@ -112,47 +115,48 @@ public class MenuService {
     }
 
     private static Object coletarValorCriterio(int criterio, Scanner scan){
-        return switch(criterio){
-            case 1 -> {
+        switch(criterio){
+            case 1: {
                 System.out.print("Digite o nome ou sobrenome do pet: ");
                 String name = scan.nextLine().trim().toLowerCase();
-                yield Regex.isValidNameAndSubName(name) ? name : null;
+                return Regex.isValidNameAndSubName(name) ? name : null;
             }
-            case 2 -> {
+            case 2: {
                 System.out.print("Digite a idade do pet: ");
                 String age = scan.nextLine().trim().replace(",", ".");
-                yield Regex.isValidAgeOrSize(age) ? Double.parseDouble(age) : null;
+                return Regex.isValidAgeOrSize(age) ? Double.parseDouble(age) : null;
             }
-            case 3 -> {
+            case 3: {
                 System.out.print("Digite o gênero do pet (masculino/feminino): ");
                 String gender = scan.nextLine().trim().toLowerCase();
                 if(gender.equals("masculino") || gender.equals("m")){
-                    yield GenrePet.MALE;
+                    return GenrePet.MALE;
                 }else if(gender.equals("feminino") || gender.equals("f")){
-                    yield GenrePet.FEMALE;
+                    return GenrePet.FEMALE;
                 }
-                yield null;
+                return null;
             }
-            case 4 -> {
+            case 4: {
                 System.out.print("Digite o peso do pet: ");
                 String size = scan.nextLine().trim().replace(",", ".");
-                yield Regex.isValidAgeOrSize(size) ? Double.parseDouble(size) : null;
+                return Regex.isValidAgeOrSize(size) ? Double.parseDouble(size) : null;
             }
-            case 5 -> {
+            case 5: {
                 System.out.print("Digite a espécie do pet: ");
-                yield scan.nextLine().trim();
+                return scan.nextLine().trim();
             }
-            case 6 -> {
+            case 6: {
                 System.out.print("Digite o endereço (bairro, cidade, rua): ");
                 String[] address = scan.nextLine().trim().split(",");
                 if(address.length >= 3){
-                    yield new AddressWhoFoundPet(address[1].trim(), address[2].trim(), address[0].trim());
+                    return new AddressWhoFoundPet(address[1].trim(), address[2].trim(), address[0].trim());
                 }
                 System.out.println("Formato de endereço inválido.");
-                yield null;
+                return null;
             }
-            default -> null;
-        };
+            default:
+                return null;
+        }
     }
 
     public void menu() throws IOException{
@@ -177,7 +181,7 @@ public class MenuService {
                 System.out.println(option);
             }
             System.out.println("-------------------------------------------------------------------");
-            IO.print("Faça sua escolha: ");
+            System.out.print("Faça sua escolha: ");
             
             if(scan.hasNextInt()){
                 choose = scan.nextInt();
@@ -231,15 +235,15 @@ public class MenuService {
                     System.out.flush();
 
                     System.out.println("-------------------------------------------------------------------");
-                    IO.println("Digite quais critérios deseja usar, segue a lista dos possiveis: ");
-                    IO.println("[1] : Nome ou sobrenome");
-                    IO.println("[2] : Idade");
-                    IO.println("[3] : Genêro");
-                    IO.println("[4] : Peso");
-                    IO.println("[5] : Raça");
-                    IO.println("[6] : Endereço");
+                    System.out.println("Digite quais critérios deseja usar, segue a lista dos possiveis: ");
+                    System.out.println("[1] : Nome ou sobrenome");
+                    System.out.println("[2] : Idade");
+                    System.out.println("[3] : Genêro");
+                    System.out.println("[4] : Peso");
+                    System.out.println("[5] : Raça");
+                    System.out.println("[6] : Endereço");
                     System.out.println("-------------------------------------------------------------------");
-                    IO.println("Digite o número do critério separando-os por vírgula (max. 2 por busca) : ");
+                    System.out.println("Digite o número do critério separando-os por vírgula (max. 2 por busca) : ");
                     String[] userOption = scan.nextLine().trim().split(",");
                     
                     if(userOption.length == 0 || userOption.length > 2){
@@ -328,7 +332,7 @@ public class MenuService {
         Double age = null, size=null;
 
         for(int i = this.start; i < this.end; i++){
-            IO.print(getAnswerFromFluxogram(i+1));
+            System.out.print(getAnswerFromFluxogram(i+1));
             switch(i){
                 case 0:
                     String input = scanner.nextLine(); 
@@ -492,14 +496,14 @@ public class MenuService {
                     System.out.println((i+1)+" : "+petAttrs[i]);
                 }
                 System.out.println("-------------------------------------------------------------------");
-                IO.print("Faça sua escolha: ");
+                System.out.print("Faça sua escolha: ");
                 int choose = scan.nextInt();
                 scan.nextLine(); 
 
                 if(choose >= 1 && choose <= 8){
                     switch(choose){
                         case 1:
-                            IO.print("Digite o novo nome do pet "+pet.getName()+": ");
+                            System.out.print("Digite o novo nome do pet "+pet.getName()+": ");
                             String newName = scan.nextLine().trim();
 
                             if(!Regex.isValidNameAndSubName(newName)){
@@ -510,7 +514,7 @@ public class MenuService {
                             }
                             break;
                         case 2:
-                            IO.print("Digite o novo sobrenome do pet "+pet.getSubname()+": ");
+                            System.out.print("Digite o novo sobrenome do pet "+pet.getSubname()+": ");
                             String newSubName = scan.nextLine().trim();
 
                             if(!Regex.isValidNameAndSubName(newSubName)){

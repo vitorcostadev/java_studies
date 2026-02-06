@@ -5,6 +5,6 @@ public class a01 {
         // int, double, float, char, byte, short, long, boolean
         int numero=10;
 
-        IO.println("A idade é: " + numero + " anos.");
+        System.out.println("A idade é: " + numero + " anos.");
     }
 }

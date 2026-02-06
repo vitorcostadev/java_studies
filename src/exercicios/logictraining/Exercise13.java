@@ -7,7 +7,7 @@ import java.util.Scanner;
  e imprima na tela o nome da pessoa e se ela é maior ou menor de idade.
  */
 public class Exercise13 {
-    static void main() {
+    public static void main(String[] args) {
         String name;
         int idade=0;
         Scanner scan = new Scanner(System.in);

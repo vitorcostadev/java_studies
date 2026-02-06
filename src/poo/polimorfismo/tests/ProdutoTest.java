@@ -6,7 +6,7 @@ import src.poo.polimorfismo.domain.Tomate;
 import src.poo.polimorfismo.service.CalculadoraImposto;
 
 public class ProdutoTest {
-    static void main() {
+    public static void main(String[] args) {
         Computador computer = new Computador("PC DA NASA", 9500);
         Tomate tomate = new Tomate("Cereja", 25);
         Televisao tv = new Televisao("LG 50\"", 3199);

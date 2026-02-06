@@ -1,7 +1,7 @@
 package src.exceptions.tests.runtime;
 
 public class RuntimeExceptionTest03 {
-    static void main() {
+    public static void main(String[] args) {
         try{
             System.out.println("Abrindo arquivo");
             throw new Exception("Erro");

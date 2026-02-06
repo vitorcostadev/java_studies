@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateFormatterTest {
-    void main() {
+    public static void main(String[] args) {
         LocalDate date = LocalDate.now();
         String s1 = date.format(DateTimeFormatter.ISO_DATE);
         System.out.println(s1.replace("-", "/"));

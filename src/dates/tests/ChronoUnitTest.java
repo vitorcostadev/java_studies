@@ -5,7 +5,7 @@ import java.time.Month;
 import java.time.temporal.ChronoUnit;
 
 public class ChronoUnitTest {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         LocalDateTime birthday = LocalDateTime.of(2005, Month.JUNE, 20, 0, 0 ,0);
         System.out.println(ChronoUnit.DAYS.between(birthday, LocalDateTime.now()));
         System.out.println(ChronoUnit.WEEKS.between(birthday, LocalDateTime.now()));

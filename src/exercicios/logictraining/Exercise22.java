@@ -8,11 +8,11 @@ sabendo que o carro faz 12km com um litro. Deve-se fornecer ao usuário o tempo 
 a sua velocidade média, distância percorrida e a quantidade de litros utilizados para fazer a viagem.
  */
 public class Exercise22 {
-    static void main() {
+    public static void main(String[] args) {
         SecureRandom random = new SecureRandom();
 
-        int tempo = random.nextInt(1,30);
-        int velocidade = random.nextInt(30, 180);
+        int tempo = random.nextInt(29) + 1;
+        int velocidade = random.nextInt(150) + 30;
 
         int distance = tempo * velocidade;
         int litrosUsado = distance / 12;

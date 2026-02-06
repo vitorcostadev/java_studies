@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class DateLocaleTest {
-    static void main() {
+    public static void main(String[] args) {
         // pt-BR
         Locale localeItaly = new Locale("it", "IT");
         Locale localeSwi = new Locale("it", "CH");

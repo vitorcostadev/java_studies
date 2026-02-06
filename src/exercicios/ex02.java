@@ -19,7 +19,7 @@ public class ex02 {
 
         do{
             System.out.printf("Digite o nome do %d vendedor(a): %n", i+1);
-            vendedores[i++] = scan.next().strip().toUpperCase();
+            vendedores[i++] = scan.next().trim().toUpperCase();
         }while(i<3);
 
         int[] totalVendas = new int[3];

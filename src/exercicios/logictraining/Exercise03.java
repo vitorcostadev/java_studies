@@ -8,14 +8,14 @@ Ao final de qualquer um dos cálculos deve-se atribuir o resultado a uma variáv
 imprimir seu valor na tela.
  */
 public class Exercise03 {
-    static void main() {
+    public static void main(String[] args) {
         int[] values = new int[2];
         Scanner scan = new Scanner(System.in);
         int C = 0;
 
         for(int i = 0; i<2; i++){
             do {
-                IO.print("Digite o " + (i + 1) + "° valor: ");
+                System.out.print("Digite o " + (i + 1) + "° valor: ");
                 values[i] = scan.nextInt();
             }while(values[i] < 0);
         }

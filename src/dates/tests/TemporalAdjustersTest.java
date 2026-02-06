@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 
 public class TemporalAdjustersTest {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         LocalDate now = LocalDate.now();
         System.out.println(now);
 

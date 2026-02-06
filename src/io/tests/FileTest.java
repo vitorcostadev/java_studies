@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 
 public class FileTest {
-    void main(){
+    public static void main(String[] args) {
         File file = new File("C:\\Users\\yori0\\OneDrive\\Documentos\\Cjava\\files\\file.txt");
         try {
             if(file.exists()){

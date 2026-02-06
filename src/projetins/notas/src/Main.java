@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    static void main(String[] args) {
+    public static void main(String[] args) {
         String path = "C:\\Users\\yori0\\OneDrive\\Documentos\\Cjava\\src\\projetins\\notas\\files";
 
         File file = new File(path+"\\notas.txt");
@@ -23,7 +23,7 @@ public class Main {
 
         try(FileWriter fw = new FileWriter(file, true)){
             Scanner scan = new Scanner(System.in);
-            IO.print("Digite um texto para ser salvo: ");
+            System.out.print("Digite um texto para ser salvo: ");
             fw.write(scan.nextLine().trim()+"\n");
             fw.flush();
 

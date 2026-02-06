@@ -9,7 +9,7 @@ public class Funcionario {
         System.out.println("Nome: "+this.nome);
         System.out.println("Idade: "+this.idade);
         System.out.println("Salario: " );
-        for(int salario : this.salario) IO.print(salario + " | ");
+        for(int salario : this.salario) System.out.print(salario + " | ");
         System.out.println("\nMedia Salarial: "+ mediaSalarial());
     }
 

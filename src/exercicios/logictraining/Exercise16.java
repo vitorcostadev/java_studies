@@ -8,7 +8,7 @@ import java.security.SecureRandom;
  verifique se são válidos, determine se o triângulo é equilátero, isósceles ou escaleno.
  */
 public class Exercise16 {
-    static void main() {
+    public static void main(String[] args) {
         SecureRandom random = new SecureRandom();
 
         int x = 10;

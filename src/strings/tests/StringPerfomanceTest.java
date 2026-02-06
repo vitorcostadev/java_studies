@@ -1,7 +1,7 @@
 package src.strings.tests;
 
 public class StringPerfomanceTest {
-    static void main() {
+    public static void main(String[] args) {
         long inicio = System.currentTimeMillis();
         concatString(1000_0000);
         long fim = System.currentTimeMillis();

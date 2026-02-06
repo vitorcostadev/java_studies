@@ -75,7 +75,7 @@ public class PetWriterAndReader {
                         AddressWhoFoundPet address;
                         double age, size;
                         
-                        String[] nameParts = listString.getFirst().split(",")[1].trim().split(" ");
+                        String[] nameParts = listString.get(0).split(",")[1].trim().split(" ");
                         petName = nameParts[0];
                         if(nameParts.length > 1){
                             for(int i = 1; i < nameParts.length; i++){
@@ -222,7 +222,7 @@ public class PetWriterAndReader {
                     AddressWhoFoundPet address;
                     double age, size;
                     
-                    String[] nameParts = listString.getFirst().split(",")[1].trim().split(" ");
+                    String[] nameParts = listString.get(0).split(",")[1].trim().split(" ");
                     petName = nameParts[0];
                     petSubName = nameParts.length > 1 ? nameParts[1] : "";
                     

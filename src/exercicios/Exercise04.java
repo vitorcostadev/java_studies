@@ -5,7 +5,7 @@ import java.util.Scanner;
 imprima na tela o seu antecessor e o seu sucessor.
  */
 public class Exercise04 {
-    static void main() {
+    public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int value = 0;
 

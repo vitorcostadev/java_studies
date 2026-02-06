@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 
 public class Client {
-    static void main() {
+    public static void main(String[] args) {
         int opcao=0;
         Scanner scan = new Scanner(System.in);
         double valorProduto=0;

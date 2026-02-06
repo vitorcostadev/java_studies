@@ -5,7 +5,7 @@ import src.poo.interfaces.classes.DateLoader;
 import src.poo.interfaces.classes.FileLoader;
 
 public class DataLoaderTest {
-    static void main() {
+    public static void main(String[] args) {
         DatabaseLoader database = new DatabaseLoader();
         FileLoader file = new FileLoader();
 

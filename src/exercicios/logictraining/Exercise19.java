@@ -6,10 +6,10 @@ import java.security.SecureRandom;
 19 - Faça um algoritmo que imprima na tela a tabuada de 1 até 10.
  */
 public class Exercise19 {
-    static void main() {
+    public static void main(String[] args) {
         SecureRandom random = new SecureRandom();
 
-        int tab = random.nextInt(1, 20);
+        int tab = random.nextInt(19) + 1;
 
         System.out.println("Tabuada do 1 até "+tab);
 

@@ -4,8 +4,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ResourceBundleTest {
-    static void main(){
-        ResourceBundle bundle = ResourceBundle.getBundle("messages", Locale.of("pt", "BR"));
+    public static void main(String[] args) {
+        ResourceBundle bundle = ResourceBundle.getBundle("messages", new Locale("pt", "BR"));
 
         System.out.println(bundle.containsKey("hello"));
 

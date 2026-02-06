@@ -5,7 +5,7 @@ import src.poo.polimorfismo.service.RepositorioDatabase;
 import src.poo.polimorfismo.service.RepositorioMemory;
 
 public class RepositorioTest {
-    static void main() {
+    public static void main(String[] args) {
         Repositorio repositorio = new RepositorioMemory();
         repositorio.save();
     }

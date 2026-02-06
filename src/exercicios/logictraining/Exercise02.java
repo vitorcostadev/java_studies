@@ -5,7 +5,7 @@ import java.util.Scanner;
 e imprimir na tela se o número é par ou ímpar, positivo ou negativo.
  */
 public class Exercise02 {
-    static void main() {
+    public static void main(String[] args) {
         int value = 0;
         Scanner scan = new Scanner(System.in);
 

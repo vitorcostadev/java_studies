@@ -1,7 +1,7 @@
 package src.exercicios.logicTraining2;
 
 public class Test {
-    void main(){
+    public static void main(String[] args) {
         try{
             Produto produto = new Produto("Agua", 1, 1);
             System.out.println(produto);

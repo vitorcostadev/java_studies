@@ -7,10 +7,10 @@ import java.security.SecureRandom;
 calcule a temperatura correspondente em grau Celsius. Imprima na tela as duas temperaturas.
  */
 public class Exercise17 {
-    static void main() {
+    public static void main(String[] args) {
         SecureRandom random = new SecureRandom();
 
-        int fah = random.nextInt(90, 800);
+        int fah = random.nextInt(710) + 90;
         System.out.println("Temperatura em fahrenheit: "+fah+"°F");
         int celsius = (5 * (fah-32)/9);
         System.out.println("Temperatura convertida para celsius: "+celsius+"°C");

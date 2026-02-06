@@ -4,7 +4,7 @@ import java.util.Scanner;
 import src.exceptions.exception.domain.InvalidLoginException;
 
 public class InvalidLoginExceptionTest {
-    static void main() {
+    public static void main(String[] args) {
         try {
             login();
         } catch (InvalidLoginException e) {

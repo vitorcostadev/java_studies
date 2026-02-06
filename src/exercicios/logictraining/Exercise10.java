@@ -4,7 +4,7 @@ package src.exercicios.logictraining;
  10 - Faça um algoritmo que leia três notas obtidas por um aluno, e imprima na tela a média das notas.
  */
 public class Exercise10 {
-    static void main() {
+    public static void main(String[] args) {
         int[] notas = new int[]{10,2,10};
 
         int x = 0;

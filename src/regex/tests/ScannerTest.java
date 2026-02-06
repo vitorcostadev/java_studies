@@ -1,7 +1,7 @@
 package src.regex.tests;
 
 public class ScannerTest {
-    void main(){
+    public static void main(String[] args) {
         String texto = "Asuna, Nami, Nico Robin, Kaguya Ootsuki, Ai Hoshino, Kana Arima, Akane Kurokawa";
         String[] split = texto.split(",");
 

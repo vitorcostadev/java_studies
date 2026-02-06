@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PatternMatcherTest {
-    void main(){
+    public static void main(String[] args) {
         String regex = "0xFFA321 0xF 0xFG 0x1";
         Pattern pattern = Pattern.compile("0[xX]([0-9a-fA-F])+(\\s|$)");
         List<String> matchers = getRegexString(pattern, regex);
@@ -23,7 +23,7 @@ public class PatternMatcherTest {
 
     }
 
-    public List<String> getRegexString(Pattern pattern, String text){
+    public static List<String> getRegexString(Pattern pattern, String text){
         Matcher matcher = pattern.matcher(text);
         List<String> matchers = new ArrayList<>();
 

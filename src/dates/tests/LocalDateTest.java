@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class LocalDateTest {
-    static void main() {
+    public static void main(String[] args) {
         System.out.println(new Date());
         System.out.println(Calendar.getInstance());
 

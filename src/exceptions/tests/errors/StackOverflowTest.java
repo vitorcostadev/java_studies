@@ -1,7 +1,7 @@
 package src.exceptions.tests.errors;
 
 public class StackOverflowTest {
-    static void main() {
+    public static void main(String[] args) {
         recursividade();
     }
 

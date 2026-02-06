@@ -6,7 +6,7 @@ import java.util.Scanner;
 imprima na tela os valores em ordem decrescente.
  */
 public class Exercise08 {
-    static void main() {
+    public static void main(String[] args) {
         int[] values = new int[3];
         Scanner scan = new Scanner(System.in);
         int i = 0;

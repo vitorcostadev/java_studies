@@ -5,7 +5,7 @@ import src.exceptions.domain.Pessoa;
 import src.exceptions.exception.domain.InvalidLoginException;
 
 public class UnderwritingWithExceptionTest {
-    static void main() {
+    public static void main(String[] args) {
         Pessoa people = new Pessoa();
         Funcionario funcionario = new Funcionario();
 

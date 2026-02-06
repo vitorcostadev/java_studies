@@ -1,7 +1,7 @@
 package src.dates.tests;
 
 public class DateFormatTest {
-    static void main() {
+    public static void main(String[] args) {
         // No Code
     }
 }

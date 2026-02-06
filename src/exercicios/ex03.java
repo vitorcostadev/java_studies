@@ -21,8 +21,8 @@ public class ex03 {
 
         do{
             do{
-                IO.print("Digite o nome do produto que deseja comprar: ");
-                option=scan.next().strip().toLowerCase();
+                System.out.print("Digite o nome do produto que deseja comprar: ");
+                option=scan.next().trim().toLowerCase();
 
                 if(option.length() == 0) System.out.println("O nome do produto não deve ficar vazio.");
 
@@ -32,7 +32,7 @@ public class ex03 {
                 for(int i = 0; i<nomeDosProdutos.length; i++){
                     if(option.equals(nomeDosProdutos[i].toLowerCase())){
                         if(qtyInStock[i] > 0){
-                            IO.print("O produto "+option.toUpperCase()+" foi comprado com sucesso!\n");
+                            System.out.print("O produto "+option.toUpperCase()+" foi comprado com sucesso!\n");
                             qtyInStock[i] -= 1;
                         }else System.out.println("Não temos estoque para esse produto.");
                     }

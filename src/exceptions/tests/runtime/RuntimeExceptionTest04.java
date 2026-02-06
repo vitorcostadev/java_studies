@@ -1,7 +1,7 @@
 package src.exceptions.tests.runtime;
 
 public class RuntimeExceptionTest04 {
-    static void main() {
+    public static void main(String[] args) {
         try{
             throw new RuntimeException();
         }catch(ArrayIndexOutOfBoundsException e){

@@ -3,10 +3,10 @@ package src.exercicios.logictraining;
 import java.security.SecureRandom;
 
 public class Exercise15 {
-    static void main() {
+    public static void main(String[] args) {
         SecureRandom random = new SecureRandom();
 
-        int ano = random.nextInt(1900, 2025);
+        int ano = random.nextInt(125) + 1900;
 
         int anos=0, meses=0, dias=0;
 

@@ -1,7 +1,7 @@
 package src.wrappers.tests;
 
 public class WrapperTest {
-    static void main() {
+    public static void main(String[] args) {
         Byte a = 1;
         Short b = 1;
         Integer c = 1;

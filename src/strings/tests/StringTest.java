@@ -1,7 +1,7 @@
 package src.strings.tests;
 
 public class StringTest {
-    static void main() {
+    public static void main(String[] args) {
         String name = "William"; // String constant pool
         String name2 = "William";
         name = name.concat(" Suane");

@@ -6,7 +6,7 @@ import src.exceptions.exception.domain.Leitor2;
 import java.io.*;
 
 public class TryWithResourcesTest {
-    static void main() {
+    public static void main(String[] args) {
         readArchive();
     }
 
