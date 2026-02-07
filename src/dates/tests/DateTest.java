@@ -1,0 +1,12 @@
+package src.dates.tests;
+
+import java.util.Date;
+
+public class DateTest {
+    public static void main(String[] args) {
+        Date date = new Date();
+        date.setTime(date.getTime()+3_600_000);
+        System.out.println(date);
+    }
+
+}
