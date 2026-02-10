@@ -127,4 +127,29 @@ public class Pets extends PetsTemplate {
     public String getFilename() {
         return filename;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) return  false;
+        if(this == obj) return true;
+        if(this.getClass() != obj.getClass()) return false;
+        Pets pets = (Pets) obj;
+        return name.equals(pets.getName()) && subname.equals(pets.getSubname());
+    }
+
+    @Override
+    public String toString() {
+        return "Pets{" +
+                "name='" + name + '\'' +
+                ", subname='" + subname + '\'' +
+                ", typePet=" + typePet +
+                ", genrePet=" + genrePet +
+                ", addressWhoFoundPet=" + addressWhoFoundPet +
+                ", age=" + age +
+                ", size=" + size +
+                ", specie='" + specie + '\'' +
+                ", filename='" + filename + '\'' +
+                '}';
+    }
+
 }

@@ -15,13 +15,14 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
+import java.util.function.Predicate;
 
 import desafios.sistemaDeCadastroDePet.domain.AddressWhoFoundPet;
 import desafios.sistemaDeCadastroDePet.domain.GenrePet;
 import desafios.sistemaDeCadastroDePet.domain.Pets;
 import desafios.sistemaDeCadastroDePet.domain.TypePet;
 import desafios.sistemaDeCadastroDePet.repositories.InvalidParameterException;
+import desafios.sistemaDeCadastroDePet.repositories.PetsTemplate;
 
 public class PetWriterAndReader {
     public String pathname;
@@ -191,94 +192,44 @@ public class PetWriterAndReader {
             
     }
 
-    public Pets findPetByName(StringBuilder name, StringBuilder subname) throws IOException{
-        File file = new File(this.pathname);
-        String[] files = file.list();
+    public List<Pets> find(Predicate<Pets> petsPredicate, List<Pets> pets){
+        List<Pets> returnedPets = new ArrayList<>();
 
-        for(int i = 0; i< Objects.requireNonNull(files).length; i++){
-            files[i] = files[i].replace(" - ", ",");
+        for (Pets pet : pets) {
+            if(petsPredicate.test(pet)){
+                returnedPets.add(pet);
+            }
         }
+        return returnedPets;
+    }
 
-        for(String k : files){
-            String nameInDb = k.split("[.,]")[1];
-            
-            String nomeCompleto = (name.toString().trim() + " " + subname.toString().trim()).toUpperCase();
-            
-            if(nomeCompleto.equals(nameInDb.toUpperCase())){
-                List<String> listString = new ArrayList<>();
+    public Pets find(Predicate<Pets> petsPredicate){
+        List<Pets> pets = getAllPets();
 
-                try(FileReader fr = new FileReader(this.pathname+"/"+k.replace(","," - "));
-                    BufferedReader br = new BufferedReader(fr)){
-                    String linha;
-                    while((linha = br.readLine()) != null){
-                        listString.add(linha.replace(" - ", ","));
-                    }
-                }
-
-                if(listString.size() >= 7){
-                    String petName, petSubName, specie;
-                    TypePet tp;
-                    GenrePet gp;
-                    AddressWhoFoundPet address;
-                    double age, size;
-                    
-                    String[] nameParts = listString.get(0).split(",")[1].trim().split(" ");
-                    petName = nameParts[0];
-                    petSubName = nameParts.length > 1 ? nameParts[1] : "";
-                    
-                    tp = listString.get(1).split(",")[1].trim().equals("Gato") 
-                        ? TypePet.CAT : TypePet.DOG;
-                    
-                    gp = listString.get(2).split(",")[1].trim().equals("Masculino") 
-                        ? GenrePet.MALE : GenrePet.FEMALE;
-                    
-                    String[] addressParts = listString.get(3).split(",");
-                    address = new AddressWhoFoundPet(
-                        addressParts.length > 2 ? addressParts[2].trim() : "",
-                        addressParts.length > 3 ? addressParts[3].trim() : "",
-                        addressParts.length > 1 ? addressParts[1].trim() : ""
-                    );
-                    
-                    String ageStr = listString.get(4).split(",")[1].trim().split(" ")[0];
-                    age = Double.parseDouble(ageStr);
-                    
-                    String sizeStr = listString.get(5).split(",")[1].trim().replaceAll("[a-zA-Z]+", "");
-                    size = Double.parseDouble(sizeStr);
-                    
-                    specie = listString.get(6).split(",")[1].trim();
-
-                    return new Pets(petName,
-                        petSubName,
-                        tp, gp,
-                        address, age, size,
-                        specie, this.pathname+"/"+k.replace(","," - "));
-
-                }
+        for (Pets pet : pets) {
+            if(petsPredicate.test(pet)){
+                return pet;
             }
         }
         return null;
     }
 
     public void deletePet(String name, String subname) throws IOException{
-        Pets pet = findPetByName(new StringBuilder(name), new StringBuilder(subname));
+        Pets pet = find(p -> p.getName().equalsIgnoreCase(name) && p.getSubname().equalsIgnoreCase(subname));
         
         if(pet == null){
             System.out.println("Pet não encontrado: " + name + " " + subname);
             return;
         }
-        
-        try{
-            Path deleteFileFounded = Paths.get(pet.getFilename());
-            Files.delete(deleteFileFounded);
-        }catch(Exception e){
-            System.out.println("Erro ao deletar o pet: "+e.getMessage());
-        }
+        Path deleteFileFounded = Paths.get(pet.getFilename());
+        Files.delete(deleteFileFounded);
+        System.out.println("O pet foi deletado com sucesso.");
     }
 
     public void updatePet(Pets newPet, String name, String subName) throws InvalidParameterException{
 
         try{
-            Pets pet = findPetByName(new StringBuilder(name), new StringBuilder(subName));
+            Pets pet = find(p -> p.getName().equalsIgnoreCase(name) && p.getSubname().equalsIgnoreCase(subName));
             if(pet != null){
                 deletePet(name, subName);
                 addNewPet(newPet);

@@ -8,7 +8,7 @@
 3. **Interfaces**
 4. **Collections**  
    (List, LinkedList, Set, TreeSet, HashSet, HashMap, Queue, PriorityQueue, NavigableSet, NavigableMap, Iterator, LinkedHashMap, LinkedHashSet, Map)
-5. **Generics** (Wildcard — estudando atualmente)
+5. **Generics** (Wildcard, Generic Classes, Generic Methods)
 6. **Dates**  
    (LocalDate, Date, LocalDateTime, ZoneId, Instant, Calendar, Locale, DateTimeFormatter, ChronoUnit, SimpleDateFormat, TemporalAdjusters, DateFormat)
 7. **Serialization**
@@ -21,5 +21,11 @@
 12. **Regex**
 13. **Repetitions**
 14. **Wrappers**
+15. **Internal Classes**
+    (Inner Classes, Local Classes, Anonymous Classes, Classes Aninhadas)
+16. **Parametrization**
+17. **Lambdas**
+    (Predicate<T>, Consumer<T>, Function<T, R>)
 
 > Este repositório será atualizado constantemente conforme eu avançar nos estudos.
+> Atualizado em 10/02/2026.

@@ -7,16 +7,12 @@ public enum TypePet {
     private int id; 
     private String attrName;
 
-    private TypePet(int id, String attrName){
+    TypePet(int id, String attrName){
         this.id = id;
         this.attrName = attrName;
     }
 
     public String getAttrName() {
         return attrName;
-    }
-
-    public int getId() {
-        return id;
     }
 }

@@ -1,6 +1,6 @@
 package src.generics.domain;
 
-public class Carro {
+public class Carro implements Name{
     private String name;
 
     @Override

@@ -6,14 +6,11 @@ import java.util.regex.Pattern;
 public class Regex {
     
     public static boolean isValidNameAndSubName(String nameOrSubName){
-        Pattern pattern = Pattern.compile("^[\\p{L}\\s]+$");
-        Matcher matcher = pattern.matcher(nameOrSubName);
-
-        return matcher.find();
+        return isValidGender(nameOrSubName);
     }
 
     public static boolean isValidAgeOrSize(String ageOrSize){
-        Pattern pattern = Pattern.compile("^[\\p{N},\\.]+$");
+        Pattern pattern = Pattern.compile("^[\\p{N},.]+$");
         Matcher matcher = pattern.matcher(ageOrSize);
 
         return matcher.find();

@@ -1,5 +1,6 @@
 package src.generics.tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WildcardTest01 {

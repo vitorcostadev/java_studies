@@ -1,6 +1,6 @@
 package src.generics.domain;
 
-public class Barco {
+public class Barco implements Name{
     private String name;
 
     public Barco(String name) {

@@ -22,6 +22,15 @@ public class AddressWhoFoundPet {
         this.roadOfHome = roadOfHome;
     }
 
+    @Override
+    public String toString() {
+        return "AddressWhoFoundPet{" +
+                "numberOfHome='" + numberOfHome + '\'' +
+                ", cityOfHome='" + cityOfHome + '\'' +
+                ", roadOfHome='" + roadOfHome + '\'' +
+                '}';
+    }
+
     public void setNumberOfHome(String numberOfHome) throws InvalidParameterException{
         if(numberOfHome == null || numberOfHome.isEmpty()){
             throw new InvalidParameterException("O parametro 'numberOfHome' não pode ser vazio.");

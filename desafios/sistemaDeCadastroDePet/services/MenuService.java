@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 import desafios.sistemaDeCadastroDePet.domain.*;
 
@@ -26,8 +27,11 @@ public class MenuService {
                 String name = scan.nextLine().trim().toLowerCase();
 
                 if(Regex.isValidNameAndSubName(name)){
-                    List<Pets> petsFounded = SearchCrit.NAME.findPet(pw.getAllPets(), name);
-                    return !petsFounded.isEmpty() ? petsFounded : null;
+                   return pw.find(pet -> pet.getName()
+                           .equalsIgnoreCase(name) || pet
+                           .getSubname()
+                           .equalsIgnoreCase(name),
+                           pw.getAllPets());
                 }
                 break;
             }
@@ -36,8 +40,10 @@ public class MenuService {
                 String age = scan.nextLine().trim();
 
                 if(Regex.isValidAgeOrSize(age)){
-                    List<Pets> petsFounded = SearchCrit.AGE.findPet(pw.getAllPets(), age);
-                    return !petsFounded.isEmpty() ? petsFounded : null;
+                    return pw.find(a -> a
+                                    .getAge()
+                                    .equals(Double.parseDouble(age)),
+                            pw.getAllPets());
                 }
                 break;
             }
@@ -46,8 +52,11 @@ public class MenuService {
                 String gender = scan.nextLine().trim();
 
                 if(Regex.isValidGender(gender)){
-                    List<Pets> petsFounded = SearchCrit.SEX.findPet(pw.getAllPets(), gender);
-                    return !petsFounded.isEmpty() ? petsFounded : null;
+                    return pw.find(g -> g
+                                    .getGenrePet()
+                                    .getAttrName()
+                                    .equalsIgnoreCase(gender),
+                            pw.getAllPets());
                 }
                 break;
             }
@@ -56,16 +65,22 @@ public class MenuService {
                 String size = scan.nextLine().trim();
 
                 if(Regex.isValidAgeOrSize(size)){
-                    List<Pets> petsFounded = SearchCrit.SIZE.findPet(pw.getAllPets(), size);
-                    return !petsFounded.isEmpty() ? petsFounded : null;
+                    return pw.find(s -> s
+                                    .getSize()
+                                    .equals(Double.parseDouble(size)),
+                            pw.getAllPets());
+                    
                 }
                 break;
             }
             case 5: {
                 System.out.println("Digite a espécie do pet:");
                 String specie = scan.nextLine().trim();
-                List<Pets> petsFounded = SearchCrit.SPECIE.findPet(pw.getAllPets(), specie);
-                return !petsFounded.isEmpty() ? petsFounded : null;
+                return pw.find(s -> s
+                                .getSpecie()
+                                .equalsIgnoreCase(specie),
+                        pw.getAllPets());
+                
             }
             case 6: {
                 System.out.println("Digite o endereço do pet (bairro, cidade, rua): ");
@@ -75,8 +90,11 @@ public class MenuService {
                     System.out.println("Formato de endereço inválido. Forneça no formato: bairro, cidade, rua");
                 }else{
                     AddressWhoFoundPet addressWhoFoundPet = new AddressWhoFoundPet(address[1].trim(), address[2].trim(), address[0].trim());
-                    List<Pets> petsFounded = SearchCrit.ADDRESS.findPet(pw.getAllPets(), addressWhoFoundPet);
-                    return !petsFounded.isEmpty() ? petsFounded : null;
+                    return pw.find(a -> a
+                                    .getAddressWhoFoundPet()
+                                    .equals(addressWhoFoundPet),
+                            pw.getAllPets());
+                    
                 }
                 break;
             }
@@ -157,6 +175,32 @@ public class MenuService {
             default:
                 return null;
         }
+    }
+
+    private Predicate<Pets> predicatePorCriterio(Object valorCriterio) {
+        return pets -> {
+            if (valorCriterio instanceof String) {
+                return pets.getName().equalsIgnoreCase((String) valorCriterio)
+                        || pets.getSubname().equalsIgnoreCase((String) valorCriterio)
+                        || pets.getSpecie().equalsIgnoreCase((String) valorCriterio);
+
+            } else if (valorCriterio instanceof TypePet) {
+                return pets.getGenrePet().getAttrName()
+                        .equalsIgnoreCase(((TypePet) valorCriterio).getAttrName());
+
+            } else if (valorCriterio instanceof GenrePet) {
+                return pets.getGenrePet().getAttrName()
+                        .equalsIgnoreCase(((GenrePet)valorCriterio).getAttrName());
+
+            } else if (valorCriterio instanceof AddressWhoFoundPet) {
+                return pets.getAddressWhoFoundPet().equals(valorCriterio);
+            }else if(valorCriterio instanceof Double){
+                return pets.getAge().equals(valorCriterio) || pets
+                        .getSize().equals(valorCriterio);
+            }
+
+            return false;
+        };
     }
 
     public void menu() throws IOException{
@@ -273,15 +317,8 @@ public class MenuService {
                                     System.out.println("Valor inválido para o segundo critério.");
                                     break;
                                 }
-                                SearchCrit[] criterios = {null, SearchCrit.NAME, SearchCrit.AGE, SearchCrit.SEX, SearchCrit.SIZE, SearchCrit.SPECIE, SearchCrit.ADDRESS};
-                                List<Pets> primeiraFiltragem = criterios[optionOne].findPet(pw.getAllPets(), valorCriterio1);
-
-                                if(primeiraFiltragem == null || primeiraFiltragem.isEmpty()){
-                                    System.out.println("Nenhum pet encontrado com o primeiro critério.");
-                                    break;
-                                }
-
-                                List<Pets> resultadoFinal = criterios[optionTwo].findPet(primeiraFiltragem, valorCriterio2);
+                                List<Pets> primeiraFiltragem = pw.find(predicatePorCriterio(valorCriterio1), pw.getAllPets());
+                                List<Pets> resultadoFinal = pw.find(predicatePorCriterio(valorCriterio2),primeiraFiltragem);
 
                                 if(resultadoFinal != null && !resultadoFinal.isEmpty()){
                                     System.out.println("-------------------------------------------------------------------");
@@ -466,181 +503,176 @@ public class MenuService {
             }
 
             PetWriterAndReader pw = new PetWriterAndReader("desafios\\sistemaDeCadastroDePet\\db");
-            try {
-                StringBuilder petFirstName = new StringBuilder(names[0].trim());
-                StringBuilder petLastName = new StringBuilder();
+            String petFirstName = names[0].trim();
+            StringBuilder petLastName = new StringBuilder();
 
-                for(int i = 1; i<names.length; i++){
-                    petLastName.append(names[i].trim()).append(" ");
-                }
+            for(int i = 1; i<names.length; i++){
+                petLastName.append(names[i].trim()).append(" ");
+            }
+            Pets pet = pw.find(p -> p.getName().equalsIgnoreCase(petFirstName) && p.getSubname().equalsIgnoreCase(petLastName.toString().trim()));
+            if(pet == null){
+                System.out.println("Pet não encontrado.");
+                return;
+            }
 
-                Pets pet = pw.findPetByName(petFirstName, petLastName);
-                if(pet == null){
-                    System.out.println("Pet não encontrado.");
-                    return;
-                }
+            String[] petAttrs = {
+                "Nome",
+                "Sobrenome",
+                "Tipo do pet",
+                "Genero do pet",
+                "Endereço onde o pet foi encontrado",
+                "Idade do pet",
+                "Tamanho do pet",
+                "Espécie do pet"
+            };
+            System.out.println("Escolha o que deseja atualizar: ");
+            System.out.println("-------------------------------------------------------------------");
+            for (int i = 0; i < petAttrs.length; i++) {
+                System.out.println((i+1)+" : "+petAttrs[i]);
+            }
+            System.out.println("-------------------------------------------------------------------");
+            System.out.print("Faça sua escolha: ");
+            int choose = scan.nextInt();
+            scan.nextLine();
 
-                String[] petAttrs = {
-                    "Nome",
-                    "Sobrenome",
-                    "Tipo do pet",
-                    "Genero do pet",
-                    "Endereço onde o pet foi encontrado",
-                    "Idade do pet",
-                    "Tamanho do pet",
-                    "Espécie do pet"
-                };
-                System.out.println("Escolha o que deseja atualizar: ");
-                System.out.println("-------------------------------------------------------------------");
-                for (int i = 0; i < petAttrs.length; i++) {
-                    System.out.println((i+1)+" : "+petAttrs[i]);
-                }
-                System.out.println("-------------------------------------------------------------------");
-                System.out.print("Faça sua escolha: ");
-                int choose = scan.nextInt();
-                scan.nextLine(); 
+            if(choose >= 1 && choose <= 8){
+                switch(choose){
+                    case 1:
+                        System.out.print("Digite o novo nome do pet "+pet.getName()+": ");
+                        String newName = scan.nextLine().trim();
 
-                if(choose >= 1 && choose <= 8){
-                    switch(choose){
-                        case 1:
-                            System.out.print("Digite o novo nome do pet "+pet.getName()+": ");
-                            String newName = scan.nextLine().trim();
+                        if(!Regex.isValidNameAndSubName(newName)){
+                            System.out.println("O nome digitado é inválido, tente novamente.");
+                        }else{
+                            pet.setName(newName);
+                            System.out.println("O nome do pet foi alterado para: "+newName);
+                        }
+                        break;
+                    case 2:
+                        System.out.print("Digite o novo sobrenome do pet "+pet.getSubname()+": ");
+                        String newSubName = scan.nextLine().trim();
 
-                            if(!Regex.isValidNameAndSubName(newName)){
-                                System.out.println("O nome digitado é inválido, tente novamente.");
-                            }else{
-                                pet.setName(newName);
-                                System.out.println("O nome do pet foi alterado para: "+newName);
-                            }
-                            break;
-                        case 2:
-                            System.out.print("Digite o novo sobrenome do pet "+pet.getSubname()+": ");
-                            String newSubName = scan.nextLine().trim();
+                        if(!Regex.isValidNameAndSubName(newSubName)){
+                            System.out.println("O sobrenome digitado é inválido, tente novamente.");
+                        }else{
+                            pet.setSubname(newSubName);
+                            System.out.println("O sobrenome do pet foi alterado para: "+newSubName);
+                        }
+                        break;
+                    case 3:
+                        TypePet newTp = null;
+                        System.out.println("\nEscolha o tipo do pet: ");
+                        System.out.println("1 : Cachorro");
+                        System.out.println("2 : Gato");
 
-                            if(!Regex.isValidNameAndSubName(newSubName)){
-                                System.out.println("O sobrenome digitado é inválido, tente novamente.");
-                            }else{
-                                pet.setSubname(newSubName);
-                                System.out.println("O sobrenome do pet foi alterado para: "+newSubName);
-                            }
-                            break;
-                        case 3:
-                            TypePet newTp = null;
-                            System.out.println("\nEscolha o tipo do pet: ");
-                            System.out.println("1 : Cachorro");
-                            System.out.println("2 : Gato");
-                            
-                            String esc = scan.nextLine();
-                            int cho = Integer.parseInt(esc);
+                        String esc = scan.nextLine();
+                        int cho = Integer.parseInt(esc);
 
-                            switch(cho){
-                                case 1:
-                                    newTp = TypePet.DOG;
-                                    break;
-                                case 2:
-                                    newTp = TypePet.CAT;
-                                    break;
-                                default:
-                                    System.out.println("Opção inválida");
-                                    break;
-                            }
-                            if(newTp != null){
-                                pet.setTypePet(newTp);
-                                System.out.println("O tipo do pet foi alterado para: "+newTp.getAttrName());
-                            }
-                            break;
-                        case 4:
-                            GenrePet newGp = null;
-                            System.out.println("\nEscolha o genero do pet: ");
-                            System.out.println("1 : Masculino");
-                            System.out.println("2 : Feminino");
-                            
-                            String esc2 = scan.nextLine();
-                            int cho2 = Integer.parseInt(esc2);
-
-                            switch(cho2){
-                                case 1:
-                                    newGp = GenrePet.MALE;
-                                    break;
-                                case 2:
-                                    newGp = GenrePet.FEMALE;
-                                    break;
-                                default:
-                                    System.out.println("Opção inválida");
-                                    break;
-                            }
-                            if(newGp != null){
-                                pet.setGenrePet(newGp);
-                                System.out.println("O genero do pet foi alterado para: "+newGp.getAttrName());
-                            }
-                            break;
-                        case 5:
-                            System.out.println("Digite o novo endereço do pet (bairro, cidade, rua): ");
-                            String addInp = scan.nextLine().trim();
-                            String[] add = addInp.split(",");
-                            
-                            if(add.length < 3){
-                                System.out.println("Endereço inválido. Forneça no formato: bairro, cidade, rua");
-                            }else{
-                                AddressWhoFoundPet newAddress = new AddressWhoFoundPet(add[1].trim(), add[2].trim(), add[0].trim());
-                                pet.setAddressWhoFoundPet(newAddress);
-                                System.out.println("O endereço do pet foi alterado para: "+newAddress.getRoadOfHome()+", "+newAddress.getNumberOfHome()+", "+newAddress.getCityOfHome());
-                            }
-                            break;
-                        
-                        case 6:
-                            System.out.println("Digite a nova idade do pet: ");
-                            String ageStr = scan.nextLine().trim();
-                            if(ageStr.contains(",")){
-                                ageStr = ageStr.replace(",",".");
-                            }
-
-                            if(!Regex.isValidAgeOrSize(ageStr)){
-                                System.out.println("A idade fornecida é inválida.");
-                            }else{
-                                Double newAge = Double.parseDouble(ageStr);
-                                pet.setAge(newAge);
-                                System.out.println("A idade do pet foi alterada para: "+newAge);
-                            }
-                            break;
-                        case 7:
-                            System.out.println("Digite o novo peso do pet: ");
-                            String sizeStr = scan.nextLine().trim();
-                            if(sizeStr.contains(",")){
-                                sizeStr = sizeStr.replace(",",".");
-                            }
-
-                            if(!Regex.isValidAgeOrSize(sizeStr)){
-                                System.out.println("O peso fornecido é inválido.");
-                            }else{
-                                Double newSize = Double.parseDouble(sizeStr);
-                                pet.setSize(newSize);
-                                System.out.println("O peso do pet foi alterado para: "+newSize);
-                            }
-                            break;
-                        case 8:
-                            System.out.println("Digite a nova espécie do pet: ");
-                            String newSpecie = scan.nextLine().trim();
-
-                            if(!Regex.isValidNameAndSubName(newSpecie)){
-                                System.out.println("A espécie digitada é inválida.");
+                        switch(cho){
+                            case 1:
+                                newTp = TypePet.DOG;
                                 break;
-                            }else{
-                                pet.setSpecie(newSpecie);
-                                System.out.println("A espécie do pet foi alterada para: "+newSpecie);
-                            }
+                            case 2:
+                                newTp = TypePet.CAT;
+                                break;
+                            default:
+                                System.out.println("Opção inválida");
+                                break;
+                        }
+                        if(newTp != null){
+                            pet.setTypePet(newTp);
+                            System.out.println("O tipo do pet foi alterado para: "+newTp.getAttrName());
+                        }
+                        break;
+                    case 4:
+                        GenrePet newGp = null;
+                        System.out.println("\nEscolha o genero do pet: ");
+                        System.out.println("1 : Masculino");
+                        System.out.println("2 : Feminino");
+
+                        String esc2 = scan.nextLine();
+                        int cho2 = Integer.parseInt(esc2);
+
+                        switch(cho2){
+                            case 1:
+                                newGp = GenrePet.MALE;
+                                break;
+                            case 2:
+                                newGp = GenrePet.FEMALE;
+                                break;
+                            default:
+                                System.out.println("Opção inválida");
+                                break;
+                        }
+                        if(newGp != null){
+                            pet.setGenrePet(newGp);
+                            System.out.println("O genero do pet foi alterado para: "+newGp.getAttrName());
+                        }
+                        break;
+                    case 5:
+                        System.out.println("Digite o novo endereço do pet (bairro, cidade, rua): ");
+                        String addInp = scan.nextLine().trim();
+                        String[] add = addInp.split(",");
+
+                        if(add.length < 3){
+                            System.out.println("Endereço inválido. Forneça no formato: bairro, cidade, rua");
+                        }else{
+                            AddressWhoFoundPet newAddress = new AddressWhoFoundPet(add[1].trim(), add[2].trim(), add[0].trim());
+                            pet.setAddressWhoFoundPet(newAddress);
+                            System.out.println("O endereço do pet foi alterado para: "+newAddress.getRoadOfHome()+", "+newAddress.getNumberOfHome()+", "+newAddress.getCityOfHome());
+                        }
+                        break;
+
+                    case 6:
+                        System.out.println("Digite a nova idade do pet: ");
+                        String ageStr = scan.nextLine().trim();
+                        if(ageStr.contains(",")){
+                            ageStr = ageStr.replace(",",".");
+                        }
+
+                        if(!Regex.isValidAgeOrSize(ageStr)){
+                            System.out.println("A idade fornecida é inválida.");
+                        }else{
+                            Double newAge = Double.parseDouble(ageStr);
+                            pet.setAge(newAge);
+                            System.out.println("A idade do pet foi alterada para: "+newAge);
+                        }
+                        break;
+                    case 7:
+                        System.out.println("Digite o novo peso do pet: ");
+                        String sizeStr = scan.nextLine().trim();
+                        if(sizeStr.contains(",")){
+                            sizeStr = sizeStr.replace(",",".");
+                        }
+
+                        if(!Regex.isValidAgeOrSize(sizeStr)){
+                            System.out.println("O peso fornecido é inválido.");
+                        }else{
+                            Double newSize = Double.parseDouble(sizeStr);
+                            pet.setSize(newSize);
+                            System.out.println("O peso do pet foi alterado para: "+newSize);
+                        }
+                        break;
+                    case 8:
+                        System.out.println("Digite a nova espécie do pet: ");
+                        String newSpecie = scan.nextLine().trim();
+
+                        if(!Regex.isValidNameAndSubName(newSpecie)){
+                            System.out.println("A espécie digitada é inválida.");
                             break;
-                        default:
-                            System.out.println("Opção inválida");
-                            break;
-                    }
-                    pw.updatePet(pet, names[0].trim(), names[1].trim());
-                    System.out.println("O pet foi atualizado com sucesso!");
-                }else{
-                    System.out.println("Opção inválida. Escolha entre 1 e 8.");
+                        }else{
+                            pet.setSpecie(newSpecie);
+                            System.out.println("A espécie do pet foi alterada para: "+newSpecie);
+                        }
+                        break;
+                    default:
+                        System.out.println("Opção inválida");
+                        break;
                 }
-            } catch (IOException e) {
-                System.out.println("Erro ao tentar procurar o pet: "+e.getMessage());
+                pw.updatePet(pet, names[0].trim(), names[1].trim());
+                System.out.println("O pet foi atualizado com sucesso!");
+            }else{
+                System.out.println("Opção inválida. Escolha entre 1 e 8.");
             }
     }
 }
