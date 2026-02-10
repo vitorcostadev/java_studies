@@ -1,8 +1,4 @@
-*.class
-*.log
-target/
-bin/
-.idea/
-.vscode/
-out/
-*.iml
+/.idea
+/.vscode
+**.iml
+/**.iml
