@@ -7,7 +7,7 @@ import java.util.function.Function;
 public class LambdaTest02 {
     public static void main(String[] args) {
         List<String> names = List.of("Asuna", "Casadó", "KKKKKKKKK", "imagina nao amar java");
-        map(names, name -> name.length() > 5)
+        map(names, String::toUpperCase)
                 .forEach(System.out::println);
     }
 

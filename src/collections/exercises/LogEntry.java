@@ -1,6 +1,4 @@
 package src.collections.exercises;
-
-import org.jetbrains.annotations.NotNull;
 import src.collections.domain.Severity;
 
 import java.time.Instant;
@@ -99,7 +97,7 @@ public final class LogEntry implements Comparable<LogEntry> {
     }
 
     @Override
-    public int compareTo(@NotNull LogEntry o) {
+    public int compareTo(LogEntry o) {
         return this.serviceId.compareTo(o.getServiceId());
     }
 }
