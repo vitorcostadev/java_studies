@@ -25,7 +25,7 @@
     (Inner Classes, Local Classes, Anonymous Classes, Classes Aninhadas)
 16. **Parametrization**
 17. **Lambdas**
-    (Predicate<T>, Consumer<T>, Function<T, R>)
+    (Predicate<T>, Consumer<T>, Function<T, R>, MethodReference)
 
 > Este repositório será atualizado constantemente conforme eu avançar nos estudos.
-> Atualizado em 10/02/2026.
+> Atualizado em 20/02/2026.
