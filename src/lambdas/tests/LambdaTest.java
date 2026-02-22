@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 public class LambdaTest {
     public static void main(String[] args) {
         List<String> asuna = List.of("Asuna", "Keydrin", "Ai hoshino", "Ruby Hoshino");
-        forEach(asuna, s -> System.out.println(s));
+        forEach(asuna, System.out::println);
     }
 
     private static <T> void forEach(List<T> obj, Consumer<T> consumer){

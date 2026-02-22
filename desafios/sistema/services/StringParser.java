@@ -11,9 +11,9 @@ public class StringParser {
         return true;
     }
 
-    public static Double isNumber(String number){
-        if(number.isEmpty()) return null;
-        if(!Character.isDigit(number.charAt(0)) && number.charAt(0) != '-') return null;
+    public static boolean isNumber(String number){
+        if(number.isEmpty()) return false;
+        if(!Character.isDigit(number.charAt(0)) && number.charAt(0) != '-') return false;
         if(number.contains(",")) number = number.replace(",", ".");
 
         byte point = 0;
@@ -21,9 +21,9 @@ public class StringParser {
             if(!Character.isDigit(number.charAt(i))){
                 if(number.charAt(i) == '.') point++;
             }
-            if(!Character.isDigit(number.charAt(i)) && number.charAt(i) == '.' && point != 1) return null;
+            if(!Character.isDigit(number.charAt(i)) && number.charAt(i) == '.' && point != 1) return false;
         }
-        return Double.valueOf(number);
+        return true;
     }
 
 }

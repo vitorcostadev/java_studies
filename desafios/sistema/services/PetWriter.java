@@ -1,25 +1,19 @@
 package desafios.sistema.services;
 
-import desafios.sistema.domain.Address;
 import desafios.sistema.domain.Pets;
-import desafios.sistema.domain.enums.Gender;
-import desafios.sistema.domain.enums.Type;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-public class PetWriter {
-    private final String path = "C:\\Users\\yori0\\OneDrive\\Documentos\\Cjava\\desafios\\sistema\\db";
-    private FileWriter fw;
+public class PetWriter implements AutoCloseable{
+    private final String path = Forms.DB.getPath();
+    private final FileWriter fw;
 
-    PetWriter(FileWriter fw){
-        this.fw = fw;
+    PetWriter(Writer fw) throws IOException {
+        this.fw = new FileWriter(fw.toString());
     }
 
     private boolean createFile(String name) throws IOException{
@@ -29,7 +23,7 @@ public class PetWriter {
         return file.createNewFile();
     }
 
-    public boolean addPetToFile(Pets pet) throws IOException, RuntimeException{
+    public void addPetToFile(Pets pet) throws IOException, RuntimeException{
         ZonedDateTime zonedDateTime = Instant.ofEpochMilli(new Date().getTime()).atZone(ZoneId.systemDefault());
         if(pet == null) throw new RuntimeException("The parameter pet is null.");
 
@@ -47,7 +41,11 @@ public class PetWriter {
                 bf.flush();
             }
         }
-        return isCreatedFile;
+    }
+
+    @Override
+    public void close() throws Exception {
+        this.fw.close();
     }
 }
 

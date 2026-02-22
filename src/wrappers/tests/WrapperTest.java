@@ -1,5 +1,7 @@
 package src.wrappers.tests;
 
+import java.util.List;
+
 public class WrapperTest {
     public static void main(String[] args) {
         Byte a = 1;
@@ -10,8 +12,5 @@ public class WrapperTest {
         Double f = 10D;
         Character g = 'c';
         Boolean h = false;
-
-
-        Integer intw = Integer.parseInt("22");
     }
 }

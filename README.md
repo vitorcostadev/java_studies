@@ -25,7 +25,9 @@
     (Inner Classes, Local Classes, Anonymous Classes, Classes Aninhadas)
 16. **Parametrization**
 17. **Lambdas**
-    (Predicate<T>, Consumer<T>, Function<T, R>)
+    (Predicate<T>, Consumer<T>, Function<T, R>, MethodReference)
+18. Optional(of, ofNullable, IfPresente, orElse, orElseThrow)
+19. Streams(- estudando atualmente)
 
 > Este repositório será atualizado constantemente conforme eu avançar nos estudos.
-> Atualizado em 10/02/2026.
+> Atualizado em 22/02/2026.
