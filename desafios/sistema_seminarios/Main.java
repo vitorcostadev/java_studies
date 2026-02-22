@@ -1,4 +1,4 @@
-package src.exercicios.sistema_seminarios;
+package desafios.sistema_seminarios;
 
 public class Main {
     public static void main(String[] args) {

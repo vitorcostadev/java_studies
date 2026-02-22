@@ -1,4 +1,4 @@
-package src.exercicios.sistema_seminarios;
+package desafios.sistema_seminarios;
 
 public class Local {
     private String endereco;
