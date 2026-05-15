@@ -4,9 +4,11 @@ import src.streams.domain.LightNovel;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class StreamTest06 {
+public class StreamTest11 {
     private static final List<LightNovel> novels = new ArrayList<>(List.of(
             new LightNovel("Fullmetal Alchemist", 15.0),
             new LightNovel("Sword Art Online", 3.99),
@@ -18,19 +20,19 @@ public class StreamTest06 {
             new LightNovel("Kumo desugo ka, nani ka?", 1.99),
             new LightNovel("Monogatari", 4.00)
     ));
-
     public static void main(String[] args) {
-        System.out.println(novels.stream().allMatch(ln -> ln.getPrice() > 0));
-        System.out.println(novels.stream().noneMatch(ln -> ln.getPrice() > 0));
-        novels.stream()
-                .filter(ln -> ln.getPrice() > 3)
-                .findAny()
-                .ifPresent(System.out::println);
+       novels.stream()
+               .max(Comparator.comparing(LightNovel::getPrice))
+               .ifPresent(System.out::println);
 
-        novels.stream()
-                .filter(ln -> ln.getPrice() > 3)
-                .sorted(Comparator.comparing(LightNovel::getPrice).reversed())
-                .findFirst()
-                .ifPresent(System.out::println);
+        DoubleSummaryStatistics collect = novels.stream()
+                .collect(Collectors.summarizingDouble(LightNovel::getPrice));
+
+        System.out.println(collect);
+
+        String collected = novels.stream().map(LightNovel::getTitle)
+                .collect(Collectors.joining(","));
+
+        System.out.println(collected);
     }
 }

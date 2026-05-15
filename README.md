@@ -29,7 +29,7 @@
 18. **Optional**
     (of, ofNullable, IfPresente, orElse, orElseThrow)
 19. **Streams**
-    (filter, map, count, limit, collect, FlatMap, Finding and Match, findAny, findFirst)
+    (filter, map, count, limit, collect, FlatMap, Finding and Match, findAny, findFirst, Reduce, groupingBy)
 
 > Este repositório será atualizado constantemente conforme eu avançar nos estudos.
-> Atualizado em 22/02/2026.
+> Atualizado em 15/05/2026.

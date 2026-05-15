@@ -34,8 +34,4 @@ public class MangaRepository {
         return findBy(m -> m.getId().equals(id));
     }
 
-    public static void main(String[] args) {
-
-    }
-
 }

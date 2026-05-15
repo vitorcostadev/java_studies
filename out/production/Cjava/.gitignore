@@ -2,7 +2,7 @@
 *.log
 target/
 bin/
-.idea/
+data/.idea/
 .vscode/
 out/
 *.iml

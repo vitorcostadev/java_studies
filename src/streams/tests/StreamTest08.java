@@ -3,10 +3,9 @@ package src.streams.tests;
 import src.streams.domain.LightNovel;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public class StreamTest06 {
+public class StreamTest08 {
     private static final List<LightNovel> novels = new ArrayList<>(List.of(
             new LightNovel("Fullmetal Alchemist", 15.0),
             new LightNovel("Sword Art Online", 3.99),
@@ -20,17 +19,12 @@ public class StreamTest06 {
     ));
 
     public static void main(String[] args) {
-        System.out.println(novels.stream().allMatch(ln -> ln.getPrice() > 0));
-        System.out.println(novels.stream().noneMatch(ln -> ln.getPrice() > 0));
-        novels.stream()
-                .filter(ln -> ln.getPrice() > 3)
-                .findAny()
-                .ifPresent(System.out::println);
 
-        novels.stream()
-                .filter(ln -> ln.getPrice() > 3)
-                .sorted(Comparator.comparing(LightNovel::getPrice).reversed())
-                .findFirst()
-                .ifPresent(System.out::println);
+        double sum = novels.stream()
+                .mapToDouble(LightNovel::getPrice)
+                .filter(price -> price > 3)
+                .sum();
+
+        System.out.println(sum);
     }
 }

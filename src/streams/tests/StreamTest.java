@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class StreamTest {
-    private static List<LightNovel> novels = new ArrayList<>(List.of(
+    private static final List<LightNovel> novels = new ArrayList<>(List.of(
             new LightNovel("Fullmetal Alchemist", 15.0),
             new LightNovel("Sword Art Online", 3D),
             new LightNovel("Tensei Shittara Slime Datta Ken", 8D),
